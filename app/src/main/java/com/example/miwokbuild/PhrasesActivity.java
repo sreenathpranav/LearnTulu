@@ -42,7 +42,7 @@ public class PhrasesActivity extends AppCompatActivity {
         words.add(new Word("Please come in!","Ulaye bale!"));
         words.add(new Word("I am fine","Yan ushaar ulle"));
         words.add(new Word("What is your name?","Eeno pudar dado?"));
-        words.add(new Word("My name Krishna","Yenna pudar Krishna"));
+        words.add(new Word("My name Ram","Yenna pudar Ram"));
         words.add(new Word("I am from India","Yan India daalu"));
         words.add(new Word("Don't mention it","Malle athe"));
         words.add(new Word("Never mind","Malle iddi"));
