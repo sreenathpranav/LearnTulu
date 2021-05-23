@@ -15,7 +15,10 @@
  */
 package com.example.miwokbuild;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,21 +26,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class ColorsActivity extends AppCompatActivity {
-
+    private MediaPlayer mMediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_colors);
+        setContentView(R.layout.word_list);
 
         //creating array
-        ArrayList<Word> words = new ArrayList<Word>();
+        final ArrayList<Word> words = new ArrayList<Word>();
 // objects
-        words.add(new Word(R.drawable.color_black,"Black","Kap"));
-        words.add(new Word(R.drawable.color_brown,"Brown","Kandu"));
-        words.add(new Word(R.drawable.color_green,"Green","Pacche"));
-        words.add(new Word(R.drawable.color_red,"Red","Kempu"));
-        words.add(new Word(R.drawable.color_white,"White","Boldu"));
-        words.add(new Word(R.drawable.color_mustard_yellow,"Yellow","Manjol"));
+        words.add(new Word(R.drawable.color_black,"Black","Kap",R.raw.colors_black));
+        words.add(new Word(R.drawable.color_brown,"Brown","Kandu",R.raw.colors_brown));
+        words.add(new Word(R.drawable.color_green,"Green","Pacche",R.raw.colors_green));
+        words.add(new Word(R.drawable.color_red,"Red","Kempu",R.raw.colors_red));
+        words.add(new Word(R.drawable.color_white,"White","Boldu",R.raw.colors_white));
+        words.add(new Word(R.drawable.color_mustard_yellow,"Yellow","Manjol",R.raw.colors_yellow));
 
 
         WordAdapter adapter = new WordAdapter(this, words,R.color.category_colors);
@@ -45,6 +48,14 @@ public class ColorsActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list);
 
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                Word word= words.get(position);
+                mMediaPlayer = MediaPlayer.create(ColorsActivity.this,word.getAudioResourceId());
+                mMediaPlayer.start();
+            }
+        });
     }
 }
 

@@ -15,7 +15,10 @@
  */
 package com.example.miwokbuild;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,25 +26,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
-
+    private MediaPlayer mMediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_family);
+        setContentView(R.layout.word_list);
 
         //creating array
-        ArrayList<Word> words = new ArrayList<Word>();
+        final ArrayList<Word> words = new ArrayList<Word>();
 // objects
-        words.add(new Word(R.drawable.family_mother,"Mother","Amma"));
-        words.add(new Word(R.drawable.family_older_sister,"Older Sister","Akka"));
-        words.add(new Word(R.drawable.family_younger_sister,"Younger Sister","Megdi"));
-        words.add(new Word(R.drawable.family_daughter,"Daughter","Magal"));
-        words.add(new Word(R.drawable.family_son,"Son","Mage"));
-        words.add(new Word(R.drawable.family_older_brother,"Older Brother","Anna"));
-        words.add(new Word(R.drawable.family_younger_brother,"Younger Brother","Megye"));
-        words.add(new Word(R.drawable.family_father,"Father","Appa"));
-        words.add(new Word(R.drawable.family_grandmother,"Grand Mother","Dhoda"));
-        words.add(new Word(R.drawable.family_grandfather,"Grand Father","Ajje"));
+        words.add(new Word(R.drawable.family_mother,"Mother","Amma",R.raw.family_mother));
+        words.add(new Word(R.drawable.family_older_sister,"Elder Sister","Akka",R.raw.family_eldersister));
+        words.add(new Word(R.drawable.family_younger_sister,"Younger Sister","Megdi",R.raw.family_youngersister));
+        words.add(new Word(R.drawable.family_daughter,"Daughter","Magal",R.raw.family_daugher));
+        words.add(new Word(R.drawable.family_son,"Son","Mage",R.raw.family_son));
+        words.add(new Word(R.drawable.family_older_brother,"Elder Brother","Anna",R.raw.family_elderbrother));
+        words.add(new Word(R.drawable.family_younger_brother,"Younger Brother","Megye",R.raw.family_youngerbrother));
+        words.add(new Word(R.drawable.family_father,"Father","Appa",R.raw.family_father));
+        words.add(new Word(R.drawable.family_grandmother,"Grand Mother","Dhoda",R.raw.family_grandmother));
+        words.add(new Word(R.drawable.family_grandfather,"Grand Father","Ajje",R.raw.family_grandfather));
 
 
         WordAdapter adapter = new WordAdapter(this, words,R.color.category_family);
@@ -49,6 +52,14 @@ public class FamilyActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list);
 
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                Word word= words.get(position);
+                mMediaPlayer = MediaPlayer.create(FamilyActivity.this,word.getAudioResourceId());
+                mMediaPlayer.start();
+            }
+        });
     }
 }
 

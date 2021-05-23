@@ -15,7 +15,10 @@
  */
 package com.example.miwokbuild;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,40 +26,48 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 public class PhrasesActivity extends AppCompatActivity {
+    private MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phrases);
+        setContentView(R.layout.word_list);
 
         //creating array
-        ArrayList<Word> words = new ArrayList<Word>();
+        final ArrayList<Word> words = new ArrayList<Word>();
 // objects
-        words.add(new Word("Hello","Namaskara"));
-        words.add(new Word("Good Morning","Shubha dina"));
-        words.add(new Word("Good Night","Shuba ratri"));
-        words.add(new Word("How are you?","Eer encha ullar?"));
-        words.add(new Word("What is that?","Au jadhoo?"));
-        words.add(new Word("What is your number","Eena number jadhoo?"));
-        words.add(new Word("How was your day?","Eena dina encha ithane?"));
-        words.add(new Word("Please come in!","Ulaye bale!"));
-        words.add(new Word("I am fine","Yan ushaar ulle"));
-        words.add(new Word("What is your name?","Eeno pudar dado?"));
-        words.add(new Word("My name Ram","Yenna pudar Ram"));
-        words.add(new Word("I am from India","Yan India daalu"));
-        words.add(new Word("Don't mention it","Malle athe"));
-        words.add(new Word("Never mind","Malle iddi"));
-        words.add(new Word("I will meet you there","Yan eereg aul thikue"));
-        words.add(new Word("Yes","Anth"));
-        words.add(new Word("No","Edhi"));
-        words.add(new Word("Bye","Auu anchanda"));
-        words.add(new Word("OK","Auu"));
+        words.add(new Word("Hello","Namaskara",R.raw.greeting_hello));
+        words.add(new Word("Good Morning","Shubha dina",R.raw.greeting_goodmorning));
+        words.add(new Word("Good Night","Shuba ratri",R.raw.greeting_night));
+        words.add(new Word("How are you?","Eer encha ullar?",R.raw.greeting_howareyou));
+        words.add(new Word("What is that?","Au jadhoo?",R.raw.greeting_whatisthat));
+        words.add(new Word("What is your name?","Eeno pudar dado?",R.raw.greeting_whatisyourname));
+        words.add(new Word("What is your number","Eena number jadhoo?",R.raw.greeting_whatisyournumber));
+        words.add(new Word("How was your day?","Eena dina encha ithane?",R.raw.greeting_howwasyourday));
+        words.add(new Word("Please come in!","Ulaye bale!",R.raw.greeting_comeinside));
+        words.add(new Word("I am fine","Yan ushaar ulle",R.raw.greeting_iamfine));
+        words.add(new Word("My name Ram","Yenna pudar Ram",R.raw.greeting_mynameisram));
+        words.add(new Word("I am from India","Yan India daalu",R.raw.greeting_iamfromindia));
+        words.add(new Word("Don't mention it","Malle athe",R.raw.greeting_dontmentionit));
+        words.add(new Word("Never mind","Malle iddi",R.raw.greeting_nevermind));
+        words.add(new Word("I will meet you there","Yan eereg aul thikue",R.raw.greeting_iwillmeetyou));
+        words.add(new Word("Yes","Anth",R.raw.greeting_yes));
+        words.add(new Word("No","Edhi",R.raw.greeting_no));
+        words.add(new Word("Bye","Auu anchanda",R.raw.greeting_bye));
+        words.add(new Word("OK","Auu",R.raw.greeting_ok));
 
         WordAdapter adapter = new WordAdapter(this, words,R.color.category_phrases);
 
         ListView listView = (ListView) findViewById(R.id.list);
 
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                Word word= words.get(position);
+                mMediaPlayer = MediaPlayer.create(PhrasesActivity.this,word.getAudioResourceId());
+                mMediaPlayer.start();
+            }
+        });
     }
 }
 
